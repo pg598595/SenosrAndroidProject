@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        tools:context=".MainActivity">
+    <Button
+            android:text="List of Sensors avaliable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnGetList"
+            android:layout_gravity="center"
+            />
+    <Button
+            android:text="ACCELEROMETER Sensor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnAccelerometer"
+            android:layout_gravity="center"
+    />
+    <Button
+            android:text="gyroscope Sensor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnGyroscope"
+            android:layout_gravity="center"
+            />
+    <Button
+            android:text="proximity Sensor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/btnProximity"
+          />
+    <Button
+            android:text="Rotation Vector Sensor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/btnRotation" />
+    <Button
+            android:text="step Count Sensor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/btnStepCount" />
+    <Button
+            android:text=" Light Sensor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/btnLightSensor" />
+    <Button
+            android:text="Temperature Sensor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/btnTempSensor" />
+    <Button
+            android:text="Camera2 Demo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/btnCamera2" />
+    <Button
+            android:text="CameraX Demo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/btnCameraX" />
+    <ScrollView android:layout_width="match_parent" android:layout_height="wrap_content">
+         <TextView
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content" android:id="@+id/listOfSensor"/>
+    </ScrollView>
+</LinearLayout>

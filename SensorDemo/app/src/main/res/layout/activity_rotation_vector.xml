@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:orientation="vertical"
+              android:layout_height="match_parent">
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:textSize="20dp"
+              android:textColor="#000"
+              android:text="DEMO FOR ROTATION VECTOR SENSOR"/>
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingTop="5dp"
+              android:layout_gravity="center"
+              android:text="ROTATE THE SCREEN  TO VIEW COLOUR CHANGE"/>
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingTop="5dp"
+              android:layout_gravity="center"
+              android:text="White Colour --> Center"/>
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingTop="5dp"
+              android:layout_gravity="center"
+              android:text="Blue  --> Left / UP"/>
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingTop="5dp"
+              android:layout_gravity="center"
+              android:text="Yellow --> Right / Bottom"/>
+    <TextView
+            android:textColor="#000"
+            android:layout_width="match_parent"
+            android:paddingTop="30dp"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" android:id="@+id/tv_rotaionvalue"/>
+
+
+</LinearLayout>
+
