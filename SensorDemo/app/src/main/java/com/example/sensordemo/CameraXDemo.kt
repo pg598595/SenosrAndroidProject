@@ -1,11 +1,6 @@
 package com.example.sensordemo
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.CameraX
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureConfig
-import androidx.camera.core.Preview
-import androidx.camera.core.PreviewConfig
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
@@ -20,6 +15,7 @@ import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.camera.core.*
 
 import java.io.File
 
@@ -30,19 +26,28 @@ class CameraXDemo : AppCompatActivity() {
     private val REQUIRED_PERMISSIONS = arrayOf("android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE")
     private lateinit var textureView: TextureView
 
+//===================================On create method ==================================================================
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera_xdemo)
 
         textureView = findViewById(R.id.view_finder)
 
-        if (allPermissionsGranted()) {
-            startCamera() //start camera if permission has been granted by user
-        } else {
-            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
-        }
+            if (allPermissionsGranted()) {
+
+                startCamera() //start camera if permission has been granted by user
+
+            }
+            else {
+
+                ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+
+            }
+
     }
 
+//==================================================Start Camera method=================================================
     private fun startCamera() {
 
         CameraX.unbindAll()
@@ -51,6 +56,7 @@ class CameraXDemo : AppCompatActivity() {
 
         var screen: Size = Size(textureView.width, textureView.height) //size of the screen
 
+        //==============================code For Preview===============================================================
 
         val pConfig = PreviewConfig.Builder().setTargetAspectRatio(aspectRatio).setTargetResolution(screen).build()
         val preview = Preview(pConfig)
@@ -67,8 +73,37 @@ class CameraXDemo : AppCompatActivity() {
         }
 
 
-        val imageCaptureConfig = ImageCaptureConfig.Builder().setCaptureMode(ImageCapture.CaptureMode.MIN_LATENCY)
-            .setTargetRotation(windowManager.defaultDisplay.rotation).build()
+        //======================================code for image capture=================================================
+
+
+                //
+                //    val builder = ImageCaptureConfig.Builder()
+                //
+                //    // Create a Extender object which can be used to apply extension
+                //    // configurations.
+                //    val bokehImageCapture = BokehImageCaptureExtender.create(builder)
+                //
+                //    // Query if extension is available (optional).
+                //    if (bokehImageCapture.isExtensionAvailable()) {
+                //        // Enable the extension if available.
+                //        bokehImageCapture.enableExtension()
+                //    }
+                //
+                //    // Finish constructing configuration with the same flow as when not using
+                //    // extensions.
+                //    val config = builder.build()
+                //    val useCase = ImageCapture(config)
+                //
+                //
+                //
+
+
+        val imageCaptureConfig = ImageCaptureConfig.Builder().setFlashMode(FlashMode.ON)
+                                                 .setCaptureMode(ImageCapture.CaptureMode.MIN_LATENCY)
+                                                 .setTargetRotation(windowManager.defaultDisplay.rotation).build()
+
+    //.setLensFacing(CameraX.LensFacing.FRONT)
+
         val imgCap = ImageCapture(imageCaptureConfig)
 
         findViewById<View>(R.id.imgCapture).setOnClickListener {
@@ -88,49 +123,61 @@ class CameraXDemo : AppCompatActivity() {
             })
         }
 
-//bind to lifecycle:
+        //================================bind to lifecycle=============================================================
+
         CameraX.bindToLifecycle(this as LifecycleOwner, preview, imgCap)
     }
 
-    private fun updateTransform() {
-        val mx = Matrix()
-        val w = textureView.measuredWidth.toFloat()
-        val h = textureView.measuredHeight.toFloat()
+//===============================update Transformation for Texture View=================================================
 
-        val cX = w / 2f
-        val cY = h / 2f
 
-        val rotationDgr: Int = when (textureView.rotation.toInt()) {
-            Surface.ROTATION_0 -> 0
-            Surface.ROTATION_90 -> 90
-            Surface.ROTATION_180 -> 180
-            Surface.ROTATION_270 -> 270
-            else -> return
-        }
 
-        mx.postRotate(rotationDgr.toFloat(), cX, cY)
-        textureView.setTransform(mx)
-    }
+            private fun updateTransform() {
+                val mx = Matrix()
+                val w = textureView.measuredWidth.toFloat()
+                val h = textureView.measuredHeight.toFloat()
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+                val cX = w / 2f
+                val cY = h / 2f
 
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
-                startCamera()
-            } else {
-                Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show()
-                finish()
+                val rotationDgr: Int = when (textureView.rotation.toInt()) {
+                    Surface.ROTATION_0 -> 0
+                    Surface.ROTATION_90 -> 90
+                    Surface.ROTATION_180 -> 180
+                    Surface.ROTATION_270 -> 270
+                    else -> return
+                }
+
+                mx.postRotate(rotationDgr.toFloat(), cX, cY)
+                textureView.setTransform(mx)
             }
-        }
-    }
 
-    private fun allPermissionsGranted(): Boolean {
 
-        for (permission in REQUIRED_PERMISSIONS) {
-            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                return false
+//========================================Request Permissions ==========================================================
+
+            override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+
+                if (requestCode == REQUEST_CODE_PERMISSIONS) {
+                    if (allPermissionsGranted()) {
+                        startCamera()
+                    } else {
+                        Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                }
             }
-        }
-        return true
-    }
+
+//=========================================Check if Permission granted==================================================
+
+            private fun allPermissionsGranted(): Boolean {
+
+                for (permission in REQUIRED_PERMISSIONS) {
+                    if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                        return false
+                    }
+                }
+                return true
+            }
+
+
 }

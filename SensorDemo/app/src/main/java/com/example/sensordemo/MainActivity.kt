@@ -14,8 +14,6 @@ import android.view.VelocityTracker
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 
-//, GestureDetector.OnGestureListener,
-//    GestureDetector.OnDoubleTapListener
 class MainActivity : AppCompatActivity() , GestureDetector.OnGestureListener,
     GestureDetector.OnDoubleTapListener{
 
@@ -99,6 +97,18 @@ class MainActivity : AppCompatActivity() , GestureDetector.OnGestureListener,
         }
         btnCameraX.setOnClickListener {
             val intent = Intent(this, CameraXDemo::class.java)
+            // start your next activity
+            startActivity(intent)
+        }
+
+        btnCompassDemo.setOnClickListener {
+            val intent = Intent(this, CompassActivity::class.java)
+            // start your next activity
+            startActivity(intent)
+        }
+
+        btnGesture.setOnClickListener {
+            val intent = Intent(this, GestureActivity::class.java)
             // start your next activity
             startActivity(intent)
         }
